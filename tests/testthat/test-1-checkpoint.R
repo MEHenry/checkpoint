@@ -43,6 +43,7 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace 
       message("Expected and not installed: ", paste(setdiff(expInst, x[, "Package"]), collapse=", "))
       message("Installed and not expected: ", paste(setdiff(x[, "Package"], expInst), collapse=", "))
       message("Checkpoint library: ", checkpoint:::checkpointPath(snap_date, "lib"))
+      message(".libPaths(): ", .libPaths())
       message("Contents of checkpoint library folder:")
       message(
         list.files(checkpoint:::checkpointPath(snap_date, "lib"), recursive = TRUE)
