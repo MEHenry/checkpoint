@@ -30,12 +30,17 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace 
       "Installing packages used in this project")
 
     expInst <- c("bitops", "digest", "httr", "jsonlite", "MASS", "plyr", "Rcpp",
-                 "RCurl", "stringr", "XML", "garbage")
+                 "RCurl", "stringr", "XML")
     x <- installed.packages(fields = "Date/Publication")
     expect_true( all(expInst %in% x[, "Package"]) )
     
-    message(setdiff(expInst, x[, "Package"]))
-    message(setdiff(x[, "Package"], expInst))
+    if(!all(expInst %in% x[, "Package"])){
+      message("\n")
+      message("Expected and not installed: ", paste(setdiff(expInst, x[, "Package"]), collapse=", "))
+      message("\n")
+      message("Installed and not expected: ", paste(setdiff(x[, "Package"], expInst), collapse=", "))
+      message("\n")
+    }
 
     expect_true(
       all(
@@ -46,6 +51,10 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace 
     expect_equal(
       getOption("repos"),
       file.path("http://mran.revolutionanalytics.com/snapshot", snap_date))
+    
+    expect_true(
+      file.exists(checkpoint:::checkpointPath(snap_date, "lib"))
+      )
 
     expect_equal(
       checkpoint:::checkpointPath(snap_date, "lib"),
