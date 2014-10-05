@@ -24,6 +24,8 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace 
     cat("library(MASS)", "library(plyr)", "library(XML)", "library('httr')",
         sep="\n",
         file = file.path(project_root, "code.R"))
+    
+    message("Contents of project root: ", list.files(project_root, recursive=TRUE))
 
     expect_message(
       checkpoint(snap_date, project = project_root),
@@ -38,7 +40,8 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace 
       message("\n")
       message("Expected and not installed: ", paste(setdiff(expInst, x[, "Package"]), collapse=", "))
       message("Installed and not expected: ", paste(setdiff(x[, "Package"], expInst), collapse=", "))
-      message("Contents of checkpoint library folder")
+      message("Checkpoint library: ", checkpoint:::checkpointPath(snap_date, "lib"))
+      message("Contents of checkpoint library folder:")
       message(
         list.files(checkpoint:::checkpointPath(snap_date, "lib"), recursive = TRUE)
       )
