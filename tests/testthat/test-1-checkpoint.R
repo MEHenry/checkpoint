@@ -30,10 +30,12 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace 
       "Installing packages used in this project")
 
     x <- installed.packages(fields = "Date/Publication")
-    expect_equivalent(
-      sort(x[, "Package"]),
-      sort(c("bitops", "digest", "httr", "jsonlite", "MASS", "plyr", "Rcpp",
-             "RCurl", "stringr", "XML")))
+    expect_true(
+      all(
+        c("bitops", "digest", "httr", "jsonlite", "MASS", "plyr", "Rcpp",
+          "RCurl", "stringr", "XML") %in%
+          x[, "Package"]
+      ))
 
     expect_true(
       all(
