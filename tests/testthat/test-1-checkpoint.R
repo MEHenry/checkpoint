@@ -29,13 +29,13 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace 
       checkpoint(snap_date, project = project_root),
       "Installing packages used in this project")
 
+    expInst <- c("bitops", "digest", "httr", "jsonlite", "MASS", "plyr", "Rcpp",
+                 "RCurl", "stringr", "XML", "garbage")
     x <- installed.packages(fields = "Date/Publication")
-    expect_true(
-      all(
-        c("bitops", "digest", "httr", "jsonlite", "MASS", "plyr", "Rcpp",
-          "RCurl", "stringr", "XML") %in%
-          x[, "Package"]
-      ))
+    expect_true( all(expInst %in% x[, "Package"]) )
+    
+    message(setdiff(expInst, x[, "Package"]))
+    message(setdiff(x[, "Package"], expInst))
 
     expect_true(
       all(
