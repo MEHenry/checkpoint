@@ -9,6 +9,7 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 1, replace =
 
   test_that("snapshot functions return correct results", {
     skip_on_cran()
+    Sys.setenv("R_TESTS" = "")
 
     checkpoint:::cleanCheckpointFolder(snap_date)
 
