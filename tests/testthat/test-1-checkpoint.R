@@ -3,7 +3,7 @@ context("checkpoint")
 
 MRAN.start = as.Date("2014-09-17")
 MRAN.dates = as.Date(MRAN.start:(Sys.Date()-1), origin = as.Date("1970-01-01"))
-for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace = TRUE)])) {
+for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 1, replace = TRUE)])) {
   project_root <- file.path(tempfile(), "checkpointtemp")
   dir.create(project_root, recursive = TRUE)
 
@@ -44,6 +44,7 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 10, replace 
       message("Installed and not expected: ", paste(setdiff(x[, "Package"], expInst), collapse=", "))
       message("Checkpoint library: ", checkpoint:::checkpointPath(snap_date, "lib"))
       message(".libPaths(): ", .libPaths())
+      message(".libPaths()[1] exists: ", file.exists(.libPaths()[1]))
       message("Contents of checkpoint library folder:")
       message(
         list.files(checkpoint:::checkpointPath(snap_date, "lib"), recursive = TRUE)
