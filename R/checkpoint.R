@@ -53,13 +53,6 @@ checkpoint <- function(snapshotDate, project = getwd(), verbose=TRUE) {
 
   # install missing packages
 
-  if(length(packages.to.install) > 0) {
-    mssg(verbose, "Installing packages used in this project ")
-    utils::install.packages(pkgs = packages.to.install, verbose=FALSE, quiet=TRUE)
-  } else {
-    mssg(verbose, "No packages found to install")
-  }
-
   # detach and reload checkpointed pkgs already loaded
   search.path = search()
   lapply(
@@ -71,6 +64,14 @@ checkpoint <- function(snapshotDate, project = getwd(), verbose=TRUE) {
     function(x) {
       detach(x, unload = TRUE, force = TRUE)
       library(search.path[x], character.only = TRUE)})
+  
+  if(length(packages.to.install) > 0) {
+    mssg(verbose, "Installing packages used in this project ")
+    utils::install.packages(pkgs = packages.to.install, verbose=FALSE, quiet=TRUE)
+  } else {
+    mssg(verbose, "No packages found to install")
+  }
+
 
   NULL}
 
