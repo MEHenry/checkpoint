@@ -46,9 +46,11 @@ for(snap_date in as.character(MRAN.dates[sample(length(MRAN.dates), 1, replace =
       message(".libPaths(): ", .libPaths())
       message(".libPaths()[1] exists: ", file.exists(.libPaths()[1]))
       message("Contents of checkpoint library folder:")
+      message("repos: ", getOption("repos"))
       message(
         list.files(checkpoint:::checkpointPath(snap_date, "lib"), recursive = TRUE)
       )
+      install.packages("MASS")
       
     }
 
